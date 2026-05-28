@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#0f766e" />
+    <title>Lava Rápido | Fluxo Operacional</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Operação</p>
+          <h1>Fluxo do lava rápido</h1>
+        </div>
+        <button class="icon-button" id="refreshButton" type="button" aria-label="Atualizar dados">
+          <span aria-hidden="true">↻</span>
+        </button>
+      </header>
+
+      <main>
+        <section class="metrics-grid" aria-label="Resumo operacional">
+          <article class="metric-card">
+            <span class="metric-label">Solicitações</span>
+            <strong class="metric-value" id="metricSolicitacoes">0</strong>
+          </article>
+          <article class="metric-card">
+            <span class="metric-label">Fila lavagem</span>
+            <strong class="metric-value" id="metricLavagem">0</strong>
+          </article>
+          <article class="metric-card">
+            <span class="metric-label">Hoje</span>
+            <strong class="metric-value" id="metricHoje">0</strong>
+          </article>
+        </section>
+
+        <nav class="tabs" aria-label="Filas operacionais">
+          <button class="tab-button active" type="button" data-tab="solicitacoes">Solicitações</button>
+          <button class="tab-button" type="button" data-tab="lavagem">Lavagem</button>
+        </nav>
+
+        <section class="panel active" id="panelSolicitacoes" aria-labelledby="tabSolicitacoes">
+          <div class="section-heading">
+            <h2>Fila de solicitações</h2>
+            <span id="solicitacoesCount">0 veículos</span>
+          </div>
+          <div class="list" id="solicitacoesList"></div>
+        </section>
+
+        <section class="panel" id="panelLavagem" aria-labelledby="tabLavagem">
+          <div class="section-heading">
+            <h2>Fila de lavagem</h2>
+            <span id="lavagemCount">0 veículos</span>
+          </div>
+          <div class="list" id="lavagemList"></div>
+        </section>
+      </main>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <dialog class="modal" id="movimentacaoModal">
+      <form method="dialog" class="modal-content" id="movimentacaoForm">
+        <header class="modal-header">
+          <div>
+            <p class="eyebrow">Entrada</p>
+            <h2>Registrar movimentação</h2>
+          </div>
+          <button class="ghost-button" type="button" data-close-modal aria-label="Fechar">×</button>
+        </header>
+
+        <div class="form-grid">
+          <input name="DataInicio" type="hidden" />
+          <label>
+            CicloID
+            <input name="CicloID" readonly />
+          </label>
+          <label>
+            Placa
+            <input name="Placa" readonly />
+          </label>
+          <label>
+            Tipo de lavagem
+            <input name="Tipo_Lavagem" readonly />
+          </label>
+          <label>
+            Fornecedor
+            <input name="Fornecedor" readonly />
+          </label>
+          <label>
+            Responsável
+            <input name="Responsavel" readonly />
+          </label>
+          <label>
+            Agência
+            <input name="Agencia" readonly />
+          </label>
+          <label>
+            Lavador
+            <input name="Lavador" required autocomplete="name" placeholder="Nome do lavador" />
+          </label>
+          <label class="full">
+            Observação
+            <textarea name="Observacao" rows="3" placeholder="Detalhes da entrada"></textarea>
+          </label>
+        </div>
+
+        <footer class="modal-actions">
+          <button class="secondary-button" type="button" data-close-modal>Cancelar</button>
+          <button class="primary-button" type="submit">Salvar entrada</button>
+        </footer>
+      </form>
+    </dialog>
+
+    <dialog class="modal" id="lavagemModal">
+      <form method="dialog" class="modal-content" id="lavagemForm">
+        <header class="modal-header">
+          <div>
+            <p class="eyebrow">Lavagem</p>
+            <h2>Concluir lavagem</h2>
+          </div>
+          <button class="ghost-button" type="button" data-close-modal aria-label="Fechar">×</button>
+        </header>
+
+        <div class="form-grid">
+          <label>
+            CicloID
+            <input name="CicloID" readonly />
+          </label>
+          <label>
+            Placa
+            <input name="Placa" readonly />
+          </label>
+          <label>
+            Lavador
+            <input name="Lavador" readonly />
+          </label>
+        </div>
+
+        <fieldset class="check-group">
+          <legend>Itens feitos</legend>
+          <label><input type="checkbox" name="ItensFeitos" value="Canto de porta" /> Canto de porta</label>
+          <label><input type="checkbox" name="ItensFeitos" value="Lataria" /> Lataria</label>
+          <label><input type="checkbox" name="ItensFeitos" value="Vidros" /> Vidros</label>
+          <label><input type="checkbox" name="ItensFeitos" value="Tapetes" /> Tapetes</label>
+          <label><input type="checkbox" name="ItensFeitos" value="Aspiração" /> Aspiração</label>
+          <label><input type="checkbox" name="ItensFeitos" value="Wap" /> Wap</label>
+          <label><input type="checkbox" name="ItensFeitos" value="Pretinho" /> Pretinho</label>
+        </fieldset>
+
+        <label class="textarea-label">
+          Observação
+          <textarea name="Observacao" rows="3" placeholder="Detalhes da lavagem"></textarea>
+        </label>
+
+        <footer class="modal-actions">
+          <button class="secondary-button" type="button" data-close-modal>Cancelar</button>
+          <button class="primary-button" type="submit">Concluir lavagem</button>
+        </footer>
+      </form>
+    </dialog>
+
+    <script src="./app.js" type="module"></script>
+  </body>
+</html>
