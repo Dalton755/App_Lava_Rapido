@@ -1,6 +1,6 @@
 const CONFIG = {
   // Depois de publicar o Apps Script, cole aqui a URL do Web App.
-  API_URL: "https://script.google.com/macros/s/AKfycbwXBPyaNC-X_Tm9RCkkWYtmDcV1pUq40ok6DLDak8NLDvg1soBEzkaQbTfI38ztxUipgg/exec",
+  API_URL: "COLE_A_URL_DO_APPS_SCRIPT_AQUI",
 };
 
 const state = {
@@ -8,6 +8,8 @@ const state = {
   lavagem: [],
   loading: false,
 };
+
+const TIPOS_LAVAGEM = ["Simples", "Completa", "Simples com Jato", "Completa com Jato"];
 
 const $ = (selector) => document.querySelector(selector);
 const $$ = (selector) => Array.from(document.querySelectorAll(selector));
@@ -188,6 +190,11 @@ function setFormValues(form, values) {
   });
 }
 
+function normalizeTipoLavagem(value) {
+  const tipo = String(value || "").trim();
+  return TIPOS_LAVAGEM.includes(tipo) ? tipo : "";
+}
+
 function openMovimentacao(index) {
   const item = state.solicitacoes[index];
   if (!item) return;
@@ -196,7 +203,7 @@ function openMovimentacao(index) {
   setFormValues(elements.movimentacaoForm, {
     CicloID: item.CicloID,
     Placa: item.Placa,
-    Tipo_Lavagem: item.Tipo_Lavagem,
+    Tipo_Lavagem: normalizeTipoLavagem(item.Tipo_Lavagem),
     Fornecedor: item.Fornecedor,
     Responsavel: item.Responsavel,
     Agencia: item.Agencia,
