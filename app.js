@@ -1,6 +1,6 @@
 const CONFIG = {
   // Depois de publicar o Apps Script, cole aqui a URL do Web App.
-  API_URL: "COLE_A_URL_DO_APPS_SCRIPT_AQUI",
+  API_URL: "https://script.google.com/macros/s/AKfycbxRY-AUEw10uLXJR3idx20dhog1E3S_U9dtCnzvvsdt65ZdG8p4gFOX1k05qLedSWWxyQ/exec",
 };
 
 const state = {
